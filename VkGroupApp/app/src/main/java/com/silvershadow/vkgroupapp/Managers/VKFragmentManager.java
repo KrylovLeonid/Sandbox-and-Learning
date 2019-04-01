@@ -8,13 +8,13 @@ import com.silvershadow.vkgroupapp.Ui.Fragments.BaseFragment;
 
 import java.util.Stack;
 
-public class VKFragmewntManager {
-    private static final int EMTYFRAGMEN_STACK_SIZE = 1;
+public class VKFragmentManager {
+    private static final int EMPTY_FRAGMENT_STACK_SIZE = 1;
 
     private Stack<BaseFragment> mFragmentStack = new Stack<>();
-    private BaseFragment mCurentFragment;
+    private BaseFragment mCurrentFragment;
 
-    public void srtFragment (BaseActivity activity, BaseFragment fragment, @IdRes int containerId){
+    public void setFragment (BaseActivity activity, BaseFragment fragment, @IdRes int containerId){
         if (activity != null && !activity.isFinishing() && !contains(fragment)) {
             FragmentTransaction transaction = createAddTransaction(activity,fragment,false);
             transaction.replace(containerId,fragment);
@@ -31,12 +31,12 @@ public class VKFragmewntManager {
     }
 
     public boolean removeFragment(BaseActivity activity, BaseFragment fragment){
-        boolean canBeRemoved = fragment != null && mFragmentStack.size() > EMTYFRAGMEN_STACK_SIZE;
+        boolean canBeRemoved = fragment != null && mFragmentStack.size() > EMPTY_FRAGMENT_STACK_SIZE;
 
         if(canBeRemoved){
             FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
             mFragmentStack.pop();
-            mCurentFragment = mFragmentStack.lastElement();
+            mCurrentFragment = mFragmentStack.lastElement();
             transaction.remove(fragment);
             commitTransaction(activity,transaction);
         }
@@ -44,7 +44,7 @@ public class VKFragmewntManager {
     }
 
     public boolean removeCurrentFragment(BaseActivity activity){
-        return removeFragment(activity, mCurentFragment);
+        return removeFragment(activity, mCurrentFragment);
     }
 
 
@@ -58,21 +58,23 @@ public class VKFragmewntManager {
     }
 
     private void commitAddTransaction(BaseActivity activity, BaseFragment fragment, FragmentTransaction transaction, boolean addToBackStack){
-        if(transaction != null)
-            if(!addToBackStack)
+        if(transaction != null) {
+            mCurrentFragment = fragment;
+            if (!addToBackStack)
                 mFragmentStack = new Stack<>();
-        mFragmentStack.add(fragment);
-        commitTransaction(activity, transaction);
+            mFragmentStack.add(fragment);
+            commitTransaction(activity, transaction);
+        }
     }
 
     private void commitTransaction (BaseActivity activity, FragmentTransaction transaction){
         transaction.commit();
-        activity.fragmentOnScreen(mCurentFragment);
+        activity.fragmentOnScreen(mCurrentFragment);
     }
 
     public boolean contains(BaseFragment baseFragment){
         if (baseFragment == null)
             return false;
-        return mCurentFragment != null && mCurentFragment.getClass().getName().equals(baseFragment.getClass().getName());
+        return mCurrentFragment != null && mCurrentFragment.getClass().getName().equals(baseFragment.getClass().getName());
     }
 }

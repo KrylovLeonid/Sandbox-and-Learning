@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">VkGroupApp</string>
+    <string name="screen_name_news">News</string>
     <integer name="com_vk_sdk_AppId">6922338</integer>
 </resources>

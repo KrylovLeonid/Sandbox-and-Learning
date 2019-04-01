@@ -9,6 +9,7 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.silvershadow.vkgroupapp.Constants.ApiConstatnts;
 import com.silvershadow.vkgroupapp.Ui.Activity.BaseActivity;
+import com.silvershadow.vkgroupapp.Ui.Fragments.NewsFragment;
 import com.silvershadow.vkgroupapp.mvp.Presenter.MainPresenter;
 import com.silvershadow.vkgroupapp.mvp.View.MainView;
 import com.vk.sdk.VKAccessToken;
@@ -30,7 +31,6 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         mPresenter.checkAuth();
         //
 
@@ -67,5 +67,6 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void signedIn() {
         Toast.makeText(this, "User id " + CurrentUser.getId(), Toast.LENGTH_LONG).show();
+        setContent(new NewsFragment());
     }
 }

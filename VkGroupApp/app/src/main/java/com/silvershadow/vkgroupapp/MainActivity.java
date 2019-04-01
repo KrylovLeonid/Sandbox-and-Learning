@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.silvershadow.vkgroupapp.Constants.ApiConstatnts;
+import com.silvershadow.vkgroupapp.Ui.Activity.BaseActivity;
 import com.silvershadow.vkgroupapp.mvp.Presenter.MainPresenter;
 import com.silvershadow.vkgroupapp.mvp.View.MainView;
 import com.vk.sdk.VKAccessToken;
@@ -16,7 +17,7 @@ import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
 
 
-public class MainActivity extends MvpAppCompatActivity implements MainView {
+public class MainActivity extends BaseActivity implements MainView {
 
     @InjectPresenter
     MainPresenter mPresenter;

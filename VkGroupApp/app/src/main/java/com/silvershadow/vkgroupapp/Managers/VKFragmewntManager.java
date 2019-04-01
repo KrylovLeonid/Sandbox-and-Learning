@@ -67,7 +67,7 @@ public class VKFragmewntManager {
 
     private void commitTransaction (BaseActivity activity, FragmentTransaction transaction){
         transaction.commit();
-        activity.fragmentOnScrean(mCurentFragment);
+        activity.fragmentOnScreen(mCurentFragment);
     }
 
     public boolean contains(BaseFragment baseFragment){

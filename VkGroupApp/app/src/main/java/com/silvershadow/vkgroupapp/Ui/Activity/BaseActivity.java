@@ -7,20 +7,24 @@ import android.widget.FrameLayout;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.silvershadow.vkgroupapp.Managers.VKFragmentManager;
+import com.silvershadow.vkgroupapp.MyApplication;
 import com.silvershadow.vkgroupapp.R;
 import com.silvershadow.vkgroupapp.Ui.Fragments.BaseFragment;
 
+import javax.inject.Inject;
+
 public abstract class BaseActivity extends MvpAppCompatActivity {
 
+    @Inject
     VKFragmentManager mFragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MyApplication.getApplicationComponent().inject(this);
         setContentView(R.layout.activity_base);
         Toolbar toolbar = (Toolbar) findViewById(R.id.tooolbar);
         setSupportActionBar(toolbar);
 
-        mFragmentManager = new VKFragmentManager();
 
         FrameLayout parent = findViewById(R.id.main_wrapper);
         getLayoutInflater().inflate(getMainContentLayout(), parent);

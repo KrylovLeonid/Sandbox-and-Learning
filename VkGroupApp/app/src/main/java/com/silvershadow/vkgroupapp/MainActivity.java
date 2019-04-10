@@ -26,13 +26,15 @@ public class MainActivity extends BaseActivity implements MainView {
     public MainActivity() {
 
         super();
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MyApplication.getApplicationComponent().inject(this);
         mPresenter.checkAuth();
-        //
+
 
     }
 

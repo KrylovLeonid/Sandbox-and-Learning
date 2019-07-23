@@ -8,56 +8,59 @@ class TransactionList extends StatelessWidget {
 
   TransactionList(this.transactions, this.deleteTransaction);
 
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 400,
         child: Center(
-          child: transactions.isEmpty
-              ? Column(
-                  children: <Widget>[
-                    Text('No transaction is added',
-                        style: Theme.of(context).textTheme.title),
-                    SizedBox(),
-                    Container(
-                        height: 200,
-                        child: Image.asset('assets/images/waiting.png',
-                            fit: BoxFit.cover))
-                  ],
-                )
-              : ListView.builder(
-                  itemBuilder: (context, index) {
-                    return Card(
-                      elevation: 5,
-                      margin: EdgeInsets.all(10),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          radius: 30,
-                          child: Padding(
-                            padding: EdgeInsets.all(6),
-                            child: FittedBox(
-                              child: Text('\$${transactions[index].amount}'),
-                            ),
-                          ),
+      child: transactions.isEmpty
+          ? Column(
+              children: <Widget>[
+                Text('No transaction is added',
+                    style: Theme.of(context).textTheme.title),
+                SizedBox(),
+                Container(
+                    height: 200,
+                    child: Image.asset('assets/images/waiting.png',
+                        fit: BoxFit.cover))
+              ],
+            )
+          : ListView.builder(
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 5,
+                  margin: EdgeInsets.all(10),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Padding(
+                        padding: EdgeInsets.all(6),
+                        child: FittedBox(
+                          child: Text('\$${transactions[index].amount}'),
                         ),
-                        title: Text(
-                          transactions[index].title,
-                          style: Theme.of(context).textTheme.title,
-                        ),
-                        subtitle: Text(
-                          DateFormat.yMMMd().format(transactions[index].date),
-                        ),
-                        trailing: IconButton(
+                      ),
+                    ),
+                    title: Text(
+                      transactions[index].title,
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    subtitle: Text(
+                      DateFormat.yMMMd().format(transactions[index].date),
+                    ),
+                    trailing: MediaQuery.of(context).size.width < 360
+                        ? IconButton(
                             icon: Icon(Icons.delete),
                             color: Theme.of(context).errorColor,
-                            onPressed: () => deleteTransaction(transactions[index].id)),
-                      ),
-                    );
-                  },
-                  itemCount: transactions.length,
-                ),
-        ));
+                            onPressed: () => deleteTransaction(transactions[index].id))
+                        : FlatButton.icon(
+                            onPressed: () => deleteTransaction(transactions[index].id),
+                            icon: Icon(Icons.delete),
+                            textColor: Theme.of(context).errorColor,
+                            label: Text('Delete')),
+                  ),
+                );
+              },
+              itemCount: transactions.length,
+            ),
+    ));
   }
 }

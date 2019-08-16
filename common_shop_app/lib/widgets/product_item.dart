@@ -1,34 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:common_shop_app/screens/product_detail_screen.dart';
-
+import 'package:common_shop_app/providers/product.dart';
+import '../providers/cart.dart';
 class ProductItem extends StatelessWidget {
-  final String id;
-  final String title;
-  final String imageUrl;
-
-  ProductItem(this.id, this.title, this.imageUrl);
 
   @override
   Widget build(BuildContext context) {
+    final productItem = Provider.of<Product>(context, listen: false);
+    final cart = Provider.of<Cart>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GestureDetector(
         onTap: (){
-          Navigator.of(context).pushNamed(ProductDetailScreen.routeName, arguments: id);
+          Navigator.of(context).pushNamed(ProductDetailScreen.routeName, arguments: productItem.id);
         },
         child: GridTile(
           child: Image.network(
-            imageUrl,
+            productItem.imageUrl,
             fit: BoxFit.cover,
           ),
           footer: GridTileBar(
-            leading: IconButton(icon: Icon(Icons.favorite), onPressed: (){}, color: Theme.of(context).accentColor),
+            leading: Consumer<Product>(
+              builder: (ctx, productItem, child) =>  IconButton(icon: Icon( productItem.isFavorite ? Icons.favorite : Icons.favorite_border), onPressed: (){
+                productItem.toggleFavoriteStatus();
+              }, color: Theme.of(context).accentColor),
+            ),
             backgroundColor: Colors.black87,
             title: Text(
-              title,
+              productItem.title,
               textAlign: TextAlign.center,
             ),
-            trailing: IconButton(icon: Icon(Icons.add_shopping_cart), onPressed: (){}, color: Theme.of(context).accentColor,),
+            trailing: IconButton(icon: Icon(Icons.add_shopping_cart), onPressed: (){
+              cart.addItem(productItem.id, productItem.price,productItem.title);
+            }, color: Theme.of(context).accentColor,),
           ),
         ),
       ),

@@ -6,6 +6,7 @@ import 'providers/products_provider.dart';
 import './providers/cart.dart';
 import 'package:common_shop_app/providers/orders.dart';
 import 'package:common_shop_app/screens/all_screens_import.dart';
+import 'helpers/CustomRoute.dart';
 
 void main() => runApp(MyApp());
 

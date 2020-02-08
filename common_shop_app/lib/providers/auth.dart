@@ -4,6 +4,8 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+//make own firebase api to test
+import 'package:common_shop_app/Keys.dart';
 
 class Auth with ChangeNotifier {
   String _token;
@@ -23,7 +25,7 @@ class Auth with ChangeNotifier {
   Future<void> _authenticate(
       String email, String password, String requestType) async {
     final endPoint =
-        "https://identitytoolkit.googleapis.com/v1/accounts:$requestType?key=AIzaSyCrogN8np_MvasrnGEeKJnVlxXLigtz0vQ";
+        "https://identitytoolkit.googleapis.com/v1/accounts:$requestType?key=${Keys.key}";
 
     try {
       final response = await http.post(endPoint,

@@ -24,6 +24,7 @@ class Auth with ChangeNotifier {
 
   Future<void> _authenticate(
       String email, String password, String requestType) async {
+    //manage api key
     final endPoint =
         "https://identitytoolkit.googleapis.com/v1/accounts:$requestType?key=${Keys.key}";
 

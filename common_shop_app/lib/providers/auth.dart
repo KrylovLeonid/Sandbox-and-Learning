@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 //make own firebase api to test
-import 'package:common_shop_app/Keys.dart';
+import 'package:common_shop_app/ApiKeys.dart';
 
 class Auth with ChangeNotifier {
   String _token;
